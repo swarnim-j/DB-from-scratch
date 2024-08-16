@@ -4,17 +4,19 @@
 
 #include <vector>
 #include <string>
+#include <optional>
 
 class HashTable {
 public:
     HashTable(size_t size);
     void insert(const std::string& key, const std::string& value);
-    std::string find(const std::string& key);
+    std::optional<std::string> find(const std::string& key);
     void remove(const std::string& key);
+    std::vector<std::pair<std::string, std::string>> getAllEntries() const;
 
 private:
-    std::vector<std::pair<std::string, std::string>> table;
-    size_t hash(const std::string& key);
+    std::vector<std::vector<std::pair<std::string, std::string>>> table;
+    size_t hash(const std::string& key) const;
 };
 
 #endif // HASH_TABLE_H
