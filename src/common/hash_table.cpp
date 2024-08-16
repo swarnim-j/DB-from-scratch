@@ -3,7 +3,8 @@
 #include <iostream>
 #include <optional>
 
-HashTable::HashTable(size_t size) : table(size) {}
+
+HashTable::HashTable(size_t size) : table(size), num_entries(0) {}
 
 size_t HashTable::hash(const std::string& key) const {
     const size_t fnv_prime = 0x811C9DC5;
@@ -15,8 +16,11 @@ size_t HashTable::hash(const std::string& key) const {
     return hash % table.size();
 }
 
-
 void HashTable::insert(const std::string& key, const std::string& value) {
+    if (loadFactor() > 0.75) {
+        resize();
+    }
+    
     size_t index = hash(key);
     for (auto& kv : table[index]) {
         if (kv.first == key) {
@@ -25,6 +29,7 @@ void HashTable::insert(const std::string& key, const std::string& value) {
         }
     }
     table[index].emplace_back(key, value);
+    ++num_entries;
 }
 
 std::optional<std::string> HashTable::find(const std::string& key) {
@@ -55,4 +60,21 @@ std::vector<std::pair<std::string, std::string>> HashTable::getAllEntries() cons
             entries.push_back(kv);
         }
     }
+}
+
+void HashTable::resize() {
+    std::vector<std::vector<std::pair<std::string, std::string>>> new_table(table.size() * 2);
+
+    for (const auto& bucket : table) {
+        for (const auto& kv : bucket) {
+            size_t new_index = hash(kv.first) % new_table.size();
+            new_table[new_index].emplace_back(kv);
+        }
+    }
+
+    table = std::move(new_table);
+}
+
+double HashTable::loadFactor() const {
+    return static_cast<double>(num_entries) / table.size();
 }

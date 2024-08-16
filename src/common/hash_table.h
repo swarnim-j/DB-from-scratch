@@ -16,7 +16,10 @@ public:
 
 private:
     std::vector<std::vector<std::pair<std::string, std::string>>> table;
+    size_t num_entries;
     size_t hash(const std::string& key) const;
+    void resize();
+    double loadFactor() const;
 };
 
 #endif // HASH_TABLE_H
