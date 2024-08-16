@@ -2,6 +2,7 @@
 #include "hash_table.h"
 #include <iostream>
 #include <optional>
+#include <numeric>
 
 
 HashTable::HashTable(size_t size) : table(size), num_entries(0) {}
@@ -67,14 +68,24 @@ std::vector<std::pair<std::string, std::string>> HashTable::getAllEntries() cons
 void HashTable::resize() {
     std::vector<std::vector<std::pair<std::string, std::string>>> new_table(table.size() * 2);
 
-    for (const auto& bucket : table) {
+    auto old_table = std::move(table);
+    table = std::move(new_table);
+
+    for (const auto& bucket : old_table) {
         for (const auto& kv : bucket) {
-            size_t new_index = hash(kv.first) % new_table.size();
-            new_table[new_index].emplace_back(kv);
+            size_t new_index = hash(kv.first) % table.size();
+            table[new_index].emplace_back(kv);
         }
     }
 
-    table = std::move(new_table);
+    num_entries = std::accumulate(
+        table.begin(), 
+        table.end(), 
+        0, 
+        [](size_t acc, const auto& bucket) {
+            return acc + bucket.size(); 
+        }
+    );
 }
 
 double HashTable::loadFactor() const {
