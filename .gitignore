@@ -1,3 +1,26 @@
+# Ignore executables and binaries
+bin/
+*.exe
+*.out
+*.o
+*.obj
+
+# Ignore other build artifacts
+build/
+CMakeFiles/
+CMakeCache.txt
+Makefile
+
+# Ignore temporary files
+*.tmp
+*.log
+*.bak
+*.swp
+.DS_Store
+Thumbs.db
+
+# Ignore VS Code files
 .vscode/
 
+# Ignore utility files
 utils/
