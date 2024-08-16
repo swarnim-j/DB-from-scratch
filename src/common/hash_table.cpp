@@ -6,14 +6,15 @@
 HashTable::HashTable(size_t size) : table(size) {}
 
 size_t HashTable::hash(const std::string& key) const {
-    // Simple hash function
+    const size_t fnv_prime = 0x811C9DC5;
     size_t hash = 0;
     for (char ch : key) {
-        // TODO: change hash function to something better
-        hash = (hash * 31) + ch;
+        hash ^= ch;
+        hash *= fnv_prime;
     }
     return hash % table.size();
 }
+
 
 void HashTable::insert(const std::string& key, const std::string& value) {
     size_t index = hash(key);
