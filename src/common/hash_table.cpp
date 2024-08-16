@@ -61,6 +61,7 @@ std::vector<std::pair<std::string, std::string>> HashTable::getAllEntries() cons
             entries.push_back(kv);
         }
     }
+    return entries;
 }
 
 void HashTable::resize() {
