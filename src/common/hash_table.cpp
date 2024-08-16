@@ -33,7 +33,7 @@ void HashTable::insert(const std::string& key, const std::string& value) {
     ++num_entries;
 }
 
-std::optional<std::string> HashTable::find(const std::string& key) {
+std::optional<std::string> HashTable::find(const std::string& key) const {
     size_t index = hash(key);
     for (const auto& kv : table[index]) {
         if (kv.first == key) {

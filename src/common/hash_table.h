@@ -10,7 +10,7 @@ class HashTable {
 public:
     HashTable(size_t size);
     void insert(const std::string& key, const std::string& value);
-    std::optional<std::string> find(const std::string& key);
+    std::optional<std::string> find(const std::string& key) const;
     void remove(const std::string& key);
     std::vector<std::pair<std::string, std::string>> getAllEntries() const;
 
