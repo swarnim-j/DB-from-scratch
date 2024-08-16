@@ -48,6 +48,7 @@ void HashTable::remove(const std::string& key) {
     for (auto it = bucket.begin(); it != bucket.end(); ++it) {
         if (it->first == key) {
             bucket.erase(it);
+            --num_entries;
             return;
         }
     }
