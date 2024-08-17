@@ -13,6 +13,8 @@ public:
     std::optional<std::string> find(const std::string& key) const;
     void remove(const std::string& key);
     std::vector<std::pair<std::string, std::string>> getAllEntries() const;
+    size_t size() const;
+    size_t capacity() const;
 
 private:
     std::vector<std::vector<std::pair<std::string, std::string>>> table;
