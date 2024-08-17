@@ -91,3 +91,11 @@ void HashTable::resize() {
 double HashTable::loadFactor() const {
     return static_cast<double>(num_entries) / table.size();
 }
+
+size_t HashTable::size() const {
+    return num_entries;
+}
+
+size_t HashTable::capacity() const {
+    return table.size();
+}
