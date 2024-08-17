@@ -24,3 +24,6 @@ Thumbs.db
 
 # Ignore utility files
 utils/
+
+# Ignore test files
+main.cpp
